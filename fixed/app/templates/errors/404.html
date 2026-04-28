@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}404 – Pagina nu există{% endblock %}
+{% block content %}
+<div class="card" style="text-align:center; padding:48px;">
+    <h1 style="font-size:48px; color:#666; margin:0;">404</h1>
+    <h2>Pagina nu a fost găsită</h2>
+    <p style="color:#666;">Resursa solicitată nu există sau nu ai acces la ea.</p>
+    <a href="{{ url_for('tickets.list_tickets') }}" class="btn btn-primary">Înapoi la tichete</a>
+</div>
+{% endblock %}

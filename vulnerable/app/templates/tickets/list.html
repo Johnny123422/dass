@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Tichete{% endblock %}
+{% block content %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+    <h2 style="margin:0;">Tichete</h2>
+    <a href="{{ url_for('tickets.create_ticket') }}" class="btn btn-primary">+ Tichet nou</a>
+</div>
+<div class="card">
+    {% if tickets %}
+    <table>
+        <thead>
+            <tr>
+                <th>#ID</th>
+                <th>Titlu</th>
+                <th>Severitate</th>
+                <th>Status</th>
+                <th>Acțiuni</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td>{{ t.id }}</td>
+                <td><a href="{{ url_for('tickets.view_ticket', ticket_id=t.id) }}">{{ t.title }}</a></td>
+                <td>
+                    <span class="badge badge-{{ t.severity|lower }}">{{ t.severity }}</span>
+                </td>
+                <td>{{ t.status }}</td>
+                <td>
+                    <a href="{{ url_for('tickets.edit_ticket', ticket_id=t.id) }}" class="btn btn-sm btn-primary">Edit</a>
+                    <form method="POST" action="{{ url_for('tickets.delete_ticket', ticket_id=t.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Stergi?')">Del</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="color:#888;">Nu există tichete.</p>
+    {% endif %}
+</div>
+{% endblock %}

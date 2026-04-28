@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Ticket #{{ ticket.id }}{% endblock %}
+{% block content %}
+<div class="card">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+        <div>
+            <h2 style="margin-top:0;">{{ ticket.title }}</h2>
+            <span class="badge badge-{{ ticket.severity|lower }}">{{ ticket.severity }}</span>
+            <span style="margin-left:8px; font-size:13px; color:#666;">Status: {{ ticket.status }}</span>
+        </div>
+        <div>
+            <a href="{{ url_for('tickets.edit_ticket', ticket_id=ticket.id) }}" class="btn btn-primary btn-sm">Editează</a>
+        </div>
+    </div>
+    <hr style="margin:16px 0; border:none; border-top:1px solid #eee;">
+    <h4>Descriere:</h4>
+    <!-- FIX #3 (XSS): NU se mai foloseste |safe. Jinja2 escapeaza automat -->
+    <!-- Orice script injectat va fi afisat ca text, nu executat -->
+    <div style="background:#f9f9f9; padding:16px; border-radius:6px; line-height:1.6;">
+        {{ ticket.description }}
+    </div>
+
+    <div style="margin-top:24px;">
+        <h4>Schimbă status:</h4>
+        <!-- FIX #4A (CSRF): token CSRF inclus automat de Flask-WTF prin meta tag -->
+        <form method="POST" action="{{ url_for('tickets.change_status', ticket_id=ticket.id) }}" style="display:flex; gap:8px;">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <select name="status" style="width:auto; margin:0;">
+                <option {% if ticket.status == 'OPEN' %}selected{% endif %}>OPEN</option>
+                <option {% if ticket.status == 'IN_PROGRESS' %}selected{% endif %}>IN_PROGRESS</option>
+                <option {% if ticket.status == 'RESOLVED' %}selected{% endif %}>RESOLVED</option>
+            </select>
+            <button type="submit" class="btn btn-primary">Salvează</button>
+        </form>
+    </div>
+</div>
+<p><a href="{{ url_for('tickets.list_tickets') }}">&larr; Înapoi la listă</a></p>
+{% endblock %}

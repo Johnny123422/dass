@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Audit Log{% endblock %}
+{% block content %}
+<div class="card">
+    <h2 style="margin-top:0;">Audit Log</h2>
+    <table>
+        <thead>
+            <tr><th>Data/Ora</th><th>User ID</th><th>Acțiune</th><th>Resursă</th><th>Detalii</th><th>IP</th></tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td style="font-size:12px; white-space:nowrap;">{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                <td style="font-size:11px; color:#888;">{{ log.user_id or 'anon' }}</td>
+                <td><span class="badge" style="background:#e8f4f8; color:#1a5276;">{{ log.action }}</span></td>
+                <td>{{ log.resource_type }}{% if log.resource_id %} #{{ log.resource_id }}{% endif %}</td>
+                <td style="font-size:12px;">{{ log.message or '' }}</td>
+                <td style="font-size:12px;">{{ log.ip_address or '' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

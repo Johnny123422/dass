@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Tichet nou{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px; margin:0 auto;">
+    <h2 style="margin-top:0;">Tichet nou</h2>
+    <form method="POST">
+        <label>Titlu</label>
+        <input type="text" name="title" required placeholder="Ex: Server down în prod">
+        <label>Descriere</label>
+        <textarea name="description" rows="5" required placeholder="Descrie incidentul..."></textarea>
+        <label>Severitate</label>
+        <select name="severity">
+            <option value="LOW">LOW</option>
+            <option value="MED">MED</option>
+            <option value="HIGH">HIGH</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Creează tichet</button>
+    </form>
+</div>
+{% endblock %}

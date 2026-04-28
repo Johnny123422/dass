@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Editează tichet{% endblock %}
+{% block content %}
+<div class="card" style="max-width:600px; margin:0 auto;">
+    <h2 style="margin-top:0;">Editează tichet</h2>
+    <form method="POST">
+        <!-- FIX #4A: CSRF token -->
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label>Titlu</label>
+        <input type="text" name="title" value="{{ ticket.title }}" required maxlength="200">
+        <label>Descriere</label>
+        <textarea name="description" rows="5" required>{{ ticket.description }}</textarea>
+        <label>Severitate</label>
+        <select name="severity">
+            <option value="LOW" {% if ticket.severity == 'LOW' %}selected{% endif %}>LOW</option>
+            <option value="MED" {% if ticket.severity == 'MED' %}selected{% endif %}>MED</option>
+            <option value="HIGH" {% if ticket.severity == 'HIGH' %}selected{% endif %}>HIGH</option>
+        </select>
+        <label>Status</label>
+        <select name="status">
+            <option value="OPEN" {% if ticket.status == 'OPEN' %}selected{% endif %}>OPEN</option>
+            <option value="IN_PROGRESS" {% if ticket.status == 'IN_PROGRESS' %}selected{% endif %}>IN_PROGRESS</option>
+            <option value="RESOLVED" {% if ticket.status == 'RESOLVED' %}selected{% endif %}>RESOLVED</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Salvează modificările</button>
+        <a href="{{ url_for('tickets.view_ticket', ticket_id=ticket.id) }}" style="margin-left:8px;">Anulează</a>
+    </form>
+</div>
+{% endblock %}

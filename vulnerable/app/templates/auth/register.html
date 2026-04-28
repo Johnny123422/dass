@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Înregistrare{% endblock %}
+{% block content %}
+<div class="card" style="max-width:400px; margin:0 auto;">
+    <h2 style="margin-top:0;">Creare cont</h2>
+    <form method="POST" action="{{ url_for('auth.register') }}">
+        <label>Email</label>
+        <input type="email" name="email" required placeholder="user@company.ro">
+        <label>Parolă</label>
+        <input type="password" name="password" required placeholder="Parolă">
+        <label>Rol</label>
+        <select name="role">
+            <option value="analyst">Analyst</option>
+            <option value="manager">Manager</option>
+        </select>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Înregistrare</button>
+    </form>
+    <p style="margin-top:16px; font-size:13px;"><a href="{{ url_for('auth.login') }}">Ai deja cont? Loghează-te</a></p>
+</div>
+{% endblock %}

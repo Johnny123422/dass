@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Căutare{% endblock %}
+{% block content %}
+<div class="card">
+    <h2 style="margin-top:0;">Căutare tichete</h2>
+    <form method="GET" action="{{ url_for('tickets.search_tickets') }}" style="display:flex; gap:8px; margin-bottom:16px;">
+        <input type="text" name="q" value="{{ query }}" placeholder="Caută după titlu sau descriere..." style="margin:0;" maxlength="100">
+        <button type="submit" class="btn btn-primary">Caută</button>
+    </form>
+    {% if tickets %}
+    <table>
+        <thead>
+            <tr><th>Titlu</th><th>Severitate</th><th>Status</th></tr>
+        </thead>
+        <tbody>
+            {% for t in tickets %}
+            <tr>
+                <td><a href="{{ url_for('tickets.view_ticket', ticket_id=t.id) }}">{{ t.title }}</a></td>
+                <td><span class="badge badge-{{ t.severity|lower }}">{{ t.severity }}</span></td>
+                <td>{{ t.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% elif query %}
+    <p style="color:#888;">Niciun rezultat pentru "{{ query }}".</p>
+    {% endif %}
+</div>
+{% endblock %}
