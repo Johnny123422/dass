@@ -106,6 +106,6 @@ pytest tests/test_security.py -v
 ## Utilizatori de test
 
 Creeaza prin `/register`:
-- `analyst1@deskly.ro` / `Analyst1!` — rol: Analyst
-- `analyst2@deskly.ro` / `Analyst2!` — rol: Analyst
-- `manager1@deskly.ro` / `Manager1!` — rol: Manager
+- `lupes@gmail.com` / `Parola1234` — rol: Analyst
+- `lupes1@gmail.com` / `Parola1234` — rol: Analyst
+- `lupes2@gmail.com` / `Parola1234` — rol: Manager
